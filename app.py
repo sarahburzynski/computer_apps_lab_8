@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import joblib
 import tensorflow as tf
+import numpy as np
 
 st.set_page_config(page_title="Hamilton County Housing Value Predictor")
 
@@ -35,7 +36,10 @@ X_input = pd.DataFrame([{
     "ZONING_DESC": zoning,
 }])
 
-if st.button("Predict appraised value"):
+if st.button("Predict property value"):
     Xp = preprocess.transform(X_input)
-    pred = model.predict(Xp).ravel()[0]
-    st.success(f"Predicted APPRAISED_VALUE: {pred}")
+    pred_log = model.predict(Xp, verbose=0).ravel()[0]
+    pred_dollars = np.expm1(pred_log)
+    st.success(f"Estimated property value: ${pred_dollars:,.0f}")
+
+
