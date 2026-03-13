@@ -1,8 +1,8 @@
-streamlit
-pandas
+pandas==2.3.3
 numpy
-scikit-learn
-joblib
-tensorflow
+scikit-learn==1.4.2
+joblib==1.5.3
+tensorflow==2.16.1
 matplotlib
 requests
+streamlit
