@@ -19,20 +19,18 @@ model, preprocess = load_artifacts()
 
 st.title("Hamilton County Housing Value Predictor")
 
-st.write("Predicts APPRAISED_VALUE using a neural network.")
+st.write("Estimates property value using a neural network trained on Hamilton County assessor data.")
 
 st.header("Input features")
 
 land_value = st.number_input("LAND_VALUE", min_value=0.0, value=50000.0, step=1000.0)
 build_value = st.number_input("BUILD_VALUE", min_value=0.0, value=150000.0, step=1000.0)
 
-neighborhood = st.text_input("NEIGHBORHOOD_CODE_DESC", value="")
 zoning = st.text_input("ZONING_DESC", value="")
 
 X_input = pd.DataFrame([{
     "LAND_VALUE": land_value,
     "BUILD_VALUE": build_value,
-    "NEIGHBORHOOD_CODE_DESC": neighborhood,
     "ZONING_DESC": zoning,
 }])
 
@@ -41,5 +39,6 @@ if st.button("Predict property value"):
     pred_log = model.predict(Xp, verbose=0).ravel()[0]
     pred_dollars = np.expm1(pred_log)
     st.success(f"Estimated property value: ${pred_dollars:,.0f}")
+
 
 
